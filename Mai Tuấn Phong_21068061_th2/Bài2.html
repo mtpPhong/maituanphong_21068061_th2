@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Đồng hồ</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <script src='main.js'></script>
+  <style>
+    body {
+      background-color: black;
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #datetime-container {
+      background-color: black; 
+      border: 5px solid white; 
+      padding: 20px; 
+      border-radius: 10px; 
+      color: white;
+      font-size: 80px;
+      text-align: center;
+    }
+
+    #datetime-container span {
+      display: inline-block;
+      margin: 0 10px;
+      animation: colorChange 3s ease-in-out infinite;
+    }
+
+    #datetime-container span:nth-child(2) {
+      color: #f0f0f0;
+      font-size: 40px;
+      animation: none; 
+    }
+
+    @keyframes colorChange {
+      0% {
+        color: #ff0000; 
+      }
+      50% {
+        color: #00ff00; 
+      }
+      100% {
+        color: #ff0000; 
+      }
+    }
+
+    #datetime-container span {
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    #datetime-container span:hover {
+      animation: glow 1s ease-in-out infinite; 
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 1); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="datetime-container">
+    <span></span>:<span></span>:<span></span>  <span id="period"></span>
+  </div>
+  <script>
+    function Time() {
+      var date = new Date();
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      var second = date.getSeconds();
+      var period = (hour >= 12) ? "PM" : "AM";
+
+      hour = (hour == 0) ? 12 : ((hour > 12) ? hour - 12 : hour);
+
+      hour = update(hour);
+      minute = update(minute);
+      second = update(second);
+
+      document.getElementById("datetime-container").innerHTML = hour + " : " + minute + " : " + second + "  <span id='period'>" + period + "</span>";
+      setTimeout(Time, 1000);
+    }
+
+    function update(t) {
+      if (t < 10) {
+        return "0" + t;
+      } else {
+        return t;
+      }
+    }
+
+    Time();
+  </script>
+</body>
+</html>
